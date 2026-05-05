@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bordados Express</title>
+
+<style>
+:root {
+  --azul: #0a3d62;
+  --rosa: #ff4fa3;
+  --gris: #f5f5f5;
+  --texto: #333;
+  --verde: #25d366;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* mantené esto */
+img {
+  height: auto;
+}
+
+/* 👇 CLAVE: limita las imágenes de productos */
+.galeria .producto img {
+  width: 180px;   /* podés poner 160–200 */
+  max-width: 100%;
+}
+
+/* 👇 solo UN body, no dos */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: var(--gris);
+  color: var(--texto);
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(90deg, #0a3d62, #0060ac);
+  color: white;
+  padding: 30px;
+}
+
+h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.subtitulo {
+  color: var(--rosa);
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: bold;
+}
+
+/* MENÚ SUPERIOR TIPO TIENDA */
+.menu-superior {
+  position: sticky;
+  top: 0;
+  background: #222;
+  padding: 10px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.menu-superior button {
+  background: transparent;
+  color: white;
+  border: none;
+  margin: 0 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.menu-superior button:hover {
+  color: var(--rosa);
+}
+
+/* BOTON */
+.boton-principal {
+  display: inline-block;
+  margin-top: 15px;
+  background: var(--verde);
+  color: white;
+  padding: 14px 22px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.boton-principal:hover {
+  background: #1ebe5d;
+  transform: scale(1.05);
+}
+
+/* TEXTO EXTRA */
+.extra {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* TABS */
+.tabs {
+  margin: 20px;
+}
+
+.tabs button {
+  background: var(--azul);
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tabs button:hover {
+  background: var(--rosa);
+}
+
+/* SECCIONES */
+.pantalla {
+  display: none;
+}
+
+.pantalla.activa {
+  display: block;
+}
+
+.seccion {
+  padding: 20px;
+  background: white;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 1000px;
+}
+
+/* GALERIA */
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.galeria .producto {
+  background: #fff;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.galeria .producto img {
+  width: 200px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.galeria .producto button {
+  margin-top: 8px;
+  background: var(--verde);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.galeria .producto button:hover {
+  background: #1ebe5d;
+}
+
+/* WHATSAPP FLOTANTE */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 65px;
+  height: 65px;
+  z-index: 9999;
+}
+
+.whatsapp-float::before {
+  content: "";
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  background: white;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+
+.whatsapp-float img {
+  position: relative;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* FOOTER */
+footer {
+  background: #ff0000;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+.footer-contenido {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.col {
+  width: 32%;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.item img {
+  width: 24px;
+  height: 24px;
+}
+
+.centro {
+  text-align: center;
+}
+
+.derecha {
+  text-align: right;
+}
+
+.reseñas {
+  background: black;
+  color: gold;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 15px;
+  text-decoration: none;
+}
+
+/* TITULOS */
+footer h3 {
+  color: var(--azul);
+  border-bottom: 2px solid var(--rosa);
+  display: inline-block;
+}
+
+/* LINKS */
+footer a {
+  color: var(--azul);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .footer-contenido {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .col {
+    width: 100%;
+  }
+
+  .derecha {
+    text-align: center;
+  }
+
+  .item {
+    justify-content: center;
+  }
+
+  .galeria .producto {
+    width: 45%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Bordados Express</h1>
+  <p class="subtitulo">Nombres para guardapolvos, escudos escolares y bordados personalizados</p>
+
+  <a class="boton-principal" href="https://wa.me/5491151232026?text=Hola! Quiero hacer un pedido" target="_blank">
+    PEDIR POR WHATSAPP
+  </a>
+
+  <p class="extra">🚚 Envíos a todo el país</p>
+</header>
+
+<!-- MENÚ SUPERIOR -->
+<div class="menu-superior">
+  <button onclick="irA('inicio')">INICIO</button>
+  <button onclick="irA('productos')">PRODUCTOS</button>
+  <button onclick="irA('contacto')">CONTACTO</button>
+</div>
+
+<!-- SECCIÓN INICIO -->
+<div id="inicio" class="pantalla activa">
+  <div class="seccion">
+    <h2>Bienvenidos a Bordados Express</h2>
+    <p>Explorá nuestros productos y personalizá tu pedido.</p>
+  </div>
+</div>
+
+<!-- SECCIÓN PRODUCTOS -->
+<div id="productos" class="pantalla">
+  <div class="seccion">
+    <h2>Productos</h2>
+    <div class="tabs">
+      <button onclick="mostrar('bordados')">Personalizados</button>
+    </div>
+
+    <div id="bordados" class="seccion">
+  <h3>Bordados Personalizados</h3>
+  <p>Nombres para delantales, pintorcitos y empresas</p>
+
+  <!-- 👇 IMÁGENES -->
+  <div class="galeria">
+
+    <div class="producto">
+      <img src="Nombres2.jpg" alt="Bordado 1">
+    </div>
+
+    <div class="producto">
+      <img src="nombresyovillos.jpg" alt="Bordado 2">
+    </div>
+
+    <div class="producto">
+      <img src="ovillos2.jpg" alt="Bordado 3">
+    </div>
+
+  </div>
+
+  <!-- 👇 TEXTO -->
+  <p><strong>Precios orientativos:</strong></p>
+  <p>✔ Nombre bordado: desde $3000</p>
+  <p>✔ Escudos: desde $4000</p>
+
+  <!-- 👇 BOTÓN -->
+  <button onclick="window.open('https://wa.me/5491151232026?text=Hola! Quiero un bordado personalizado', '_blank')">
+    Pedir por WhatsApp
+  </button>
+</div>
+
+  </div>
+</div>
+
+<!-- SECCIÓN CONTACTO -->
+<div id="contacto" class="pantalla">
+  <div class="seccion">
+    <h2>Contacto</h2>
+    <form>
+      <input type="text" placeholder="Nombre *" required><br><br>
+      <input type="email" placeholder="Email *" required><br><br>
+      <textarea placeholder="Mensaje *" required></textarea><br><br>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</div>
+
+<!-- WHATSAPP CORREGIDO -->
+<a href="https://wa.me/5491151232026?text=Hola%20quiero%20consultar%20por%20bordados" target="_blank" class="whatsapp-float">
+  <img src="whatsapp.png" alt="WhatsApp">
+</a>
+
+<footer>
+
+<div class="footer-contenido">
+
+  <div class="col">
+    <h3>Medios de pago</h3>
+    <div class="item"><img src="visa.jpg"><span>Visa</span></div>
+    <div class="item"><img src="mastercard.jpg"><span>Mastercard</span></div>
+    <div class="item"><img src="mercadopago.jpg"><span>Mercado Pago</span></div>
+
+    <h3>Envíos</h3>
+    <div class="item"><img src="correoargentino.jpg"><span>Correo Argentino</span></div>
+    <div class="item"><img src="andreani.jpg"><span>Andreani</span></div>
+    <div class="item"><img src="oca.jpg"><span>OCA</span></div>
+  </div>
+
+  <div class="col centro">
+    <h3>Redes sociales</h3>
+
+    <div class="item">
+    <a href="https://www.instagram.com/bordadosexpress.arg
+    " target="_blank">
+    <img src="instagram.png" alt="Instagram">
+    <span>Instagram</span>
+    </a>
+</div>
+
+    <div class="item">
+  <a href="https://www.facebook.com/bordadosexpress.com.ar" target="_blank">
+    <img src="facebook.png" alt="Facebook">
+    <span>Facebook</span>
+  </a>
+</div>
+
+    <div class="item">
+      <a href="https://www.pinterest.com/bordadosexpress.com.ar" target="_blank">
+      <img src="pinterest.png" alt="Pinterest">
+      <span>Pinterest</span>
+      </a>
+</div>
+
+    <h3>Contacto</h3>
+
+    <div class="item">
+      <img src="correo.jpg">
+      <a href="mailto:bordadosexpress.arg@gmail.com">
+        bordadosexpress.arg@gmail.com
+      </a>
+    </div>
+
+    <div class="item">
+      <img src="telefono.jpg">
+      <a href="tel:+5491151232026">11 5123-2026</a>
+    </div>
+
+    <div class="item">
+      <img src="direccion.jpg">
+      <span>CABA</span>
+    </div>
+  </div>
+
+  <div class="col derecha">
+    <a href="https://g.page/r/CSvVP4dz5yNAEAE/review" target="_blank" class="reseñas">
+      ⭐⭐⭐⭐⭐ Ver reseñas en Google
+    </a>
+
+    <div class="item">
+      <img src="defensadelconsumidor.jpg">
+      <a href="https://www.argentina.gob.ar/defensadelconsumidor" target="_blank">
+        Defensa del Consumidor
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<p>© 2026 Bordados Express</p>
+
+</footer>
+
+<script>
+// Función para menú superior
+function irA(id){
+  document.querySelectorAll('.pantalla').forEach(p => p.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+// Función para tabs dentro de productos
+function mostrar(id){
+  const contenedores = ['bordados'];
+  contenedores.forEach(c => document.getElementById(c).style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+// Inicializar primera pantalla y primera tab
+document.addEventListener('DOMContentLoaded', function() {
+  irA('inicio');
+  mostrar('bordados');
+});
+</script>
+
+</body>
+</html>
